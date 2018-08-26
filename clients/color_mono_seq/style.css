@@ -1,0 +1,30 @@
+body {
+  padding-top: 30px;
+  background: black;
+}
+
+.notes {
+  border: 2px solid teal;
+  display: table;
+  margin: auto;
+}
+
+
+.note {
+  color: teal;
+  display: inline-block;
+  padding: 30px;
+  border: 3px solid white;
+  text-align: center;
+}
+
+.note.beat {
+  border: 3px solid red;
+}
+
+
+.note:before {
+  content:'';
+  float:left;
+  padding-top:100%;
+}

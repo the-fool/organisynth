@@ -1,0 +1,236 @@
+$bk: #000;
+$bar: #00a8f7;
+$bar-bg: #202020;
+
+@font-face {
+  font-family: euro-bold;
+  src: url('/lib/EurostileLTStd-BoldEx2.otf');
+}
+
+@font-face {
+  font-family: euro;
+  src: url('/lib/EurostileLTStd-Ex2.otf');
+}
+
+html, body {
+  margin: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
+
+}
+
+body {
+  background-color: $bk;
+}
+
+.ticks {
+  font: 10px sans-serif;
+}
+
+.track,
+.track-inset,
+.track-overlay {
+  fill-opacity: 0;
+  stroke-linecap: round;
+}
+
+.track {
+  stroke: #000;
+  stroke-opacity: 0.3;
+  stroke-width: 2px;
+}
+
+
+.track-overlay {
+  pointer-events: stroke;
+  stroke-width: 50px;
+  stroke: transparent;
+  cursor: crosshair;
+}
+
+svg {
+  .handle {
+    fill: $bar;
+  }
+  .track-inset {
+    stroke: 0;
+    fill-opacity: 1;
+    fill: $bar-bg;
+  }
+}
+
+.guidat {
+  width: 100% !important;
+
+  .guidat-toggle {
+    display: none !important;
+  }
+
+  .guidat-controller {
+    text-transform: uppercase;
+    border-left: none;
+    .guidat-slider-bg {
+      width: 65%;
+    }
+
+
+    &.number input {
+      display: none !important;
+    }
+  }
+}
+
+h1,h2 {
+  color: white;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+h1 {
+  font-size: 20px;
+
+  font-family: euro-bold;
+}
+
+h2 {
+  font-size: 14px;
+  font-family: euro;
+}
+
+main {
+  width: 1300px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+
+.widget {
+  padding: 15px;
+  flex: 1;
+}
+
+#bpm-widget {
+  max-width: 350px;
+
+  #flower-svg {
+    .cls-1 {
+      fill: #101010;
+      opacity: 1;
+    }
+
+    .petal {
+      fill: transparent;
+      &.active {
+        fill: $bar;
+      }
+    }
+  }
+  .row {
+    justify-content: baseline;
+    align-items: center;
+  }
+  .indicator-light {
+    fill: transparent;
+
+    &.active {
+      fill: red;
+    }
+  }
+}
+
+#beat-widget {
+  label {
+    color: white;
+    text-transform: uppercase;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    label, label > * {
+      color: white;
+      font-family: euro;
+      text-transform: uppercase;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      &.families {
+        justify-content: space-around;
+      }
+      &.reverb {
+        margin-left: 2rem;
+      }
+    }
+
+    .elements {
+      .button {
+        font-family: euro;
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+#synth-widget {
+  display: flex;
+  justify-content: space-between;
+
+  .single-synth {
+    width: 600px;
+  }
+
+  .synth-viewer {
+    display: flex;
+    flex-direction: row;
+
+
+    .left {
+      width: 250px;
+    }
+
+    .right {
+      width: 350px;
+    }
+
+    .attractor {
+      overflow: hidden;
+      text-align: center;
+      width: 200px;
+      border: 2px solid white;
+      padding: 2px;
+      border-radius: 10px;
+    }
+  }
+}
+
+
+#instruments-widget {
+  .brush {
+    .overlay {
+      stroke: white;
+    }
+    .handle--s {
+      fill-opacity: 0;
+      stroke-opacity: 0;
+    }
+  }
+  .selection {
+    fill: steelblue;
+    fill-opacity: 1;
+  }
+}

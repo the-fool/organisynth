@@ -1,0 +1,12 @@
+build
+yotta_modules
+yotta_targets
+__pycache__
+.#*
+elm-stuff
+node_modules
+organelle/public
+./**/public/
+./**/public
+public
+.mypy_cache

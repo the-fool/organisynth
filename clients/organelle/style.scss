@@ -1,0 +1,179 @@
+@font-face {
+  font-family: euro-bold;
+  src: url('/lib/EurostileLTStd-BoldEx2.otf');
+}
+
+@font-face {
+  font-family: fa;
+  src: url('/lib/FontAwesome.otf');
+}
+.fa {
+  font-family: fa;
+  display:inline-block;
+  font:normal normal normal 14px/1 fa;
+  font-size:inherit;
+  text-rendering:auto;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale
+}
+.fa-plus:before{content:"\f067"}
+$cream: rgb(255,251,227);
+$teal: rgb(128,203,196);
+
+$main-top-margin: 30px;
+$border-width: 2px;
+$border-radius: 5px;
+$touch-box-size: 70px;
+
+html, body {
+  margin: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background: #04050c;
+  display: flex;
+  justify-content: center;
+  background-image: '../lib/organelle_bkgrnd.png';
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+.pitch-box {
+  font-family: euro-bold;
+}
+
+.selected {
+  background: $teal;
+}
+
+.bordered {
+  border-style: solid;
+  border-width: $border-width;
+  border-color: $cream;
+  border-radius: $border-radius;
+}
+
+main {
+  margin-top: $main-top-margin;
+  max-width: 500px;
+  width: 95%;
+}
+
+#ding-button {
+  transition: 0.1s fill;
+}
+
+#bug-viewer {
+  position: relative;
+  height: 400px;
+  width: 88%;
+  padding: 15px 30px 15px 15px;
+  margin-right: auto;
+  margin-left: 2%;
+  border-color: $teal;
+  border-style: solid;
+  border-radius: $border-radius;
+  border-width: $border-width;
+
+  #bug-viz {
+    animation: ckw 1s 1;
+    transform-origin: center;
+  }
+
+  #deploy-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $touch-box-size;
+    height: $touch-box-size;
+    color: $cream;
+    font-size: 24px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    border: 0;
+    background: $teal;
+    border-radius: 50%;
+    position: absolute;
+    top: 40%;
+    right: -38px;
+  }
+}
+
+.bug-svg {
+  polygon, path {
+    stroke: $cream;
+    fill: none;
+  }
+
+  circle {
+    fill: $cream;
+  }
+}
+
+#controller {
+  width: 100%;
+  display: none;
+}
+
+#controls {
+  width: 100%;
+
+
+
+
+  #pitch-glyph, #bug-glyph {
+    padding: 15px 10px 0
+  }
+
+  #bug-selector,
+  #pitch-selector {
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  #bug-options > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #bug-selector > div {
+    height: $touch-box-size;
+  }
+
+  #bug-glyph, #bug-options > div {
+    width: $touch-box-size;
+  }
+
+  #pitch-selector {
+    > div {
+      height: $touch-box-size;
+    }
+
+    .pitch-box {
+      @extend .bordered;
+
+      height: $touch-box-size;
+      font-family: euro-bold;
+      flex: 1;
+      margin: 0 2px;
+      color: $cream;
+      padding: 3px;
+      text-transform: uppercase;
+    }
+  }
+}
+@keyframes ckw {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(720deg);
+  }
+}
