@@ -10,3 +10,4 @@ organelle/public
 ./**/public
 public
 .mypy_cache
+.vscode

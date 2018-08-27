@@ -11,6 +11,11 @@ RUN apt-get install -y python3-gi-cairo
 RUN apt-get install -y gir1.2-gtk-3.0
 RUN apt-get install -y libcairo2-dev 
 RUN apt-get install -y libgirepository1.0-dev
+RUN apt-get install -y python-setuptools  
+RUN apt-get install -y cmake 
+RUN apt-get install -y ninja-build libffi-dev libssl-dev
+RUN apt-get install -y libffi-dev
+RUN apt-get install -y libssl-dev
 
 WORKDIR /usr/src/app
 

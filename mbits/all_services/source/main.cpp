@@ -6,7 +6,7 @@
 MicroBit uBit;
 _neopixel_strip_t pixels;
 MicroBitI2C i2c = MicroBitI2C(I2C_SDA0, I2C_SCL0);
-MicroBitAccelerometer acc = MicroBitAccelerometer(i2c);
+// MicroBitAccelerometer acc = MicroBitAccelerometer(i2c);
 MicroBitUARTService *uart;
 MicroBitPin P0(MICROBIT_ID_IO_P0, MICROBIT_PIN_P0, PIN_CAPABILITY_DIGITAL);
 MicroBitSerial serial(USBTX, USBRX);
@@ -86,8 +86,8 @@ int calcFace(int pitch_quad, int roll_quad) {
 
 void getFace()
 {
-  pitch = acc.getPitch();
-  roll = acc.getRoll();
+  // pitch = acc.getPitch();
+  // roll = acc.getRoll();
 
   roll_quad = getQuad(roll);
   pitch_quad = getQuad(pitch);
@@ -140,8 +140,8 @@ int main() {
   uBit.display.scroll("GO");
 
   uBit.serial.baud(115200);
-  acc.setRange(1);
-  acc.setPeriod(20);
+  // acc.setRange(1);
+  // acc.setPeriod(20);
 
   uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_CONNECTED, onConnected);
   uBit.messageBus.listen(MICROBIT_ID_BLE, MICROBIT_BLE_EVT_DISCONNECTED, onDisconnected);
