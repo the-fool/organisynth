@@ -21,8 +21,8 @@ class ColorMonoSequencer:
     which in turn is responsible for translating notes into midi messages
     """
 
-    def __init__(self, scale_cube, base_do=BASE_DO, length=16):
-
+    def __init__(self, scale_cube, base_do=BASE_DO, length=16, identifier=None):
+        self.identifier = identifier
         self.scale_cube = scale_cube
 
         # optimization
@@ -82,11 +82,9 @@ class ColorMonoSequencer:
             return
 
         print('got', payload)
-        print('new rhythm', self.rhythm)
         await self.on_change()
 
     async def set_rhythm(self, new_rhythm):
-        print('New rhythm', new_rhythm)
         for i, _ in enumerate(self.rhythm):
             self.rhythm[i] = new_rhythm[i]
 
@@ -94,5 +92,5 @@ class ColorMonoSequencer:
 
     async def on_change(self):
         self.update_notes()
-        print('real notes', self._real_notes)
+        print(self.identifier, self._real_notes)
         await self.emit(self.msg_maker())

@@ -13,7 +13,6 @@ from .web_servers import ws_server_factory
 
 from .web_socket_clients import Clocker, MetronomeChanger,\
     ColorMonoSequencer as CMS,\
-    CubeOfScaleChanger,\
     CubeOfPatchChanger,\
     DrummerChanger,\
     FxManager
@@ -22,8 +21,7 @@ from .modules import Metronome,\
     MonoSequencer,\
     ScaleCube,\
     PatchCube,\
-    Drummer,\
-    Slidey
+    Drummer
 
 from .instruments.four_by_four import instruments
 from .table import LedTCPServer
@@ -63,10 +61,12 @@ def main():
     parse_argv()
 
     scale_cube = ScaleCube()
-    scale_changer = CubeOfScaleChanger(scale_cube)
 
-    patch_cube = PatchCube(instruments=instruments[:2])
-    patch_changer = CubeOfPatchChanger(patch_cube)
+    patch_cube_1 = PatchCube(instruments=instruments[:1])
+    patch_changer_1 = CubeOfPatchChanger(patch_cube_1)
+
+    patch_cube_2 = PatchCube(instruments=instruments[1:2])
+    patch_changer_2 = CubeOfPatchChanger(patch_cube_2)
 
     fx_cbs = make_fx_cbs()
 
@@ -75,8 +75,8 @@ def main():
     reaper_fx = FxManager(fx_cbs['reaper'])
 
     # make COLOR_MONO_SEQUENCER
-    cms1 = CMS(scale_cube)
-    cms2 = CMS(scale_cube)
+    cms1 = CMS(scale_cube, identifier='slow')
+    cms2 = CMS(scale_cube, identifier='fast')
 
     # make MONO_SEQUENCER
 
@@ -94,19 +94,11 @@ def main():
     drummer = Drummer(midi_devs=[instruments[2]])
     drummer_changer = DrummerChanger(drummer=drummer)
 
-    # make SLIDEY
-    if SLIDEY:
-        slidey = Slidey(
-            scale_cube=scale_cube, loop=loop, instruments=[instruments[2]])
-
-    # make particles
-    # particles_ws_consumer = particles_factory(midi_q)
-
     if LED:
         table_server = LedTCPServer(
             loop=loop,
             scale_cube=scale_cube,
-            patch_cube=patch_cube,
+            patch_cube=patch_cube_1,
             color_seqs=[cms2, cms1])
     # Set up metronome
     metronome_cbs = [
@@ -127,8 +119,8 @@ def main():
         'clocker': (None, clocker.obs),
         # 'particles': (particles_ws_consumer, None),
         'metronome_changer': (metro_changer.ws_consumer, metro_changer.obs),
-        'scale': (scale_changer.ws_consumer, scale_changer.obs),
-        'patch': (patch_changer.ws_consumer, patch_changer.obs),
+        # 'scale': (scale_changer.ws_consumer, scale_changer.obs),
+        'patch_1': (patch_changer_1.ws_consumer, patch_changer_1.obs),
         'cms1': (cms1.ws_consumer, cms1.obs),
         'cms2': (cms2.ws_consumer, cms2.obs),
         'drummer': (drummer_changer.ws_consumer, drummer_changer.obs),
@@ -140,21 +132,18 @@ def main():
     ws_server_coro = ws_server_factory(behaviors=ws_behaviors)
 
     coros = [
-        scale_changer.coro(),
-        patch_changer.coro(), ws_server_coro,
+        patch_changer_1.coro(), patch_changer_2.coro(),
+        ws_server_coro,
         metronome.run()
     ]
-
-    if SLIDEY:
-        coros.append(slidey.coro)
 
     if LED:
         coros.extend(table_server.coros)
 
     # Set Up mbits
     if BLE:
-        gupaz_cb = make_gupaz_uart_cb(scale_cube, loop)
-        vozuz_cb = make_vozuz_uart_cb(patch_cube, loop)
+        gupaz_cb = make_gupaz_uart_cb(patch_cube_1, loop)
+        vozuz_cb = make_vozuz_uart_cb(patch_cube_2, loop)
         setup_mbits(vozuz_cb, gupaz_cb)
 
         # and run the dbus loop
@@ -199,16 +188,16 @@ def setup_mbits(vozuz_uart_cb, gupaz_uart_cb):
     vozuz.subscribe_uart(vozuz_uart_cb)
 
 
-def make_gupaz_uart_cb(scale_cube, loop):
+def make_gupaz_uart_cb(patch_cube, loop):
     def cb(l, data, x):
         try:
             (kind, payload) = [int(chr(c)) for c in data['Value']]
             if kind == 0:
-                logging.info('Power Cube of Scale: DISCONNECTED')
+                logging.info('Power Cube of Patch 1: DISCONNECTED')
             elif kind == 1:
                 logging.info(
-                    'Power Cube of Scale: CONNECTED at {}'.format(payload))
-                asyncio.ensure_future(scale_cube.set_scale(payload), loop=loop)
+                    'Power Cube of Patch 1: CONNECTED at {}'.format(payload))
+                asyncio.ensure_future(patch_cube.set_patch(payload), loop=loop)
 
             print(kind, payload)
         except Exception as e:
@@ -223,10 +212,10 @@ def make_vozuz_uart_cb(patch_cube, loop):
         try:
             (kind, payload) = [int(chr(c)) for c in data['Value']]
             if kind == 0:
-                logging.info('Power Cube of Scale: DISCONNECTED')
+                logging.info('Power Cube of Patch 2: DISCONNECTED')
             elif kind == 1:
                 logging.info(
-                    'Power Cube of Scale: CONNECTED at {}'.format(payload))
+                    'Power Cube of Patch 2: CONNECTED at {}'.format(payload))
 
                 asyncio.ensure_future(patch_cube.set_patch(payload), loop=loop)
             print(kind, payload)

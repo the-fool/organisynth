@@ -3,6 +3,8 @@ import logging
 import serial_asyncio
 from server.modules.opc_client import OpcClientAsync
 
+JANKY_CHANNEL = 1
+
 RED = (209, 0, 0)
 ORANGE = (200, 150, 34)
 YELLOW = (255, 218, 33)
@@ -32,24 +34,20 @@ COLORS = [N_0, N_1, N_2, N_3, N_4, N_5, N_6]
 
 L = 16
 
-N_LEDS_IN_PETAL_STRIP = 6
 N_LEDS_IN_VASE = 1
 N_LEDS_IN_YURT_PANEL = 4
 
-# petal strips start at pin 0
-PETAL_STRIP_PIN = 0
-PETAL_STRIP_OFFSET = PETAL_STRIP_PIN * 64
 
-# vases start at pin 4
+# vases start at pin 0
 
-VASE_1_PIN = 4
-VASE_2_PIN = 5
+VASE_1_PIN = 1
+VASE_2_PIN = 0
 VASE_1_OFFSET = 64 * VASE_1_PIN
 VASE_2_OFFSET = 64 * VASE_2_PIN
 
 # yurt starts at pin 6
-YURT_PIN = 6
-YURT_OFFSET = 6 * 64
+YURT_PIN = 2
+YURT_OFFSET = YURT_PIN * 64
 GRAY_ARRAY = [(GREY)] * 512
 
 
@@ -67,14 +65,12 @@ class Protocol(asyncio.Protocol):
         transport.serial.rts = False
 
     def data_received(self, data):
-        print(data)
         self.msg.extend(data)
         # search for delimiter
         for i, x in enumerate(self.msg):
             if x == self.delim:
                 # are we at the end of a message?
                 if i == self.sz:
-                    print('HERE', i, self.msg)
                     self.on_data_cb(self.msg[:self.sz])
                     self.msg = self.msg[self.sz:]
                 else:
@@ -89,9 +85,6 @@ def pixel_step_factory():
     return {
         # There are 16 yurt panels
         'yurt': [GREY for _ in range(16)],
-
-        # There are 1 less petal strips than num vases
-        'petal_strips': [GREY for _ in range(N_LEDS_IN_PETAL_STRIP)],
 
         # there are 2 channels of 16 vases
         'vases': [[GREY for _ in range(16)] for _ in range(2)]
@@ -166,15 +159,7 @@ class LedTCPServer(asyncio.Protocol):
         one list of N pixel items per each step in the sequence
         """
         self.do_yurt_pixels()
-        self.do_petal_strip_pixels()
         self.do_vase_pixels()
-
-    def do_petal_strip_pixels(self):
-        color = self.get_color()
-
-        petal_strips = self.pixels['petal_strips']
-        for i, _ in enumerate(petal_strips):
-            petal_strips[i] = color
 
     def do_vase_pixels(self):
         for channel_i, vase_channel in enumerate(self.pixels['vases']):
@@ -206,10 +191,11 @@ class LedTCPServer(asyncio.Protocol):
     def on_recv_sensor_data(self, channel, data):
         logging.debug('LDCServer: Got sensor data {}'.format(data))
 
-        print(data)
         for i in range(16):
             self.pitches[channel][i] = data[i]
-
+        if channel == JANKY_CHANNEL:
+            hack(self.pitches[JANKY_CHANNEL])
+    
         self.do_pixels()
 
         asyncio.ensure_future(self.send_pixels(), loop=self.loop)
@@ -237,7 +223,6 @@ class LedTCPServer(asyncio.Protocol):
         for i, color_seq in enumerate(self.color_seqs):
             new_rhythm = to_cms_rhythm(i)
             await color_seq.set_rhythm(new_rhythm)
-            print('set', new_rhythm)
 
     async def send_pixels(self):
         self.do_pixel_array()
@@ -253,13 +238,8 @@ class LedTCPServer(asyncio.Protocol):
         return (_dim(color[0]), _dim(color[1]), _dim(color[2]))
 
     def do_pixel_array(self):
-        petal_strips = self.pixels['petal_strips']
         vases = self.pixels['vases']
         yurt = self.pixels['yurt']
-
-        # compute petal strips
-        for i in range(N_LEDS_IN_PETAL_STRIP):
-            self.pixel_array[i + PETAL_STRIP_OFFSET] = petal_strips[i]
 
         # compute vases
         for vase_index, vase_color in enumerate(vases[0]):
@@ -280,3 +260,11 @@ class LedTCPServer(asyncio.Protocol):
             for j in range(N_LEDS_IN_YURT_PANEL):
                 self.pixel_array[j + (index * N_LEDS_IN_YURT_PANEL) +
                                  YURT_OFFSET] = yurt_color
+
+
+def hack(pitches):
+    last_4 = pitches[12:16]
+    pentultimate_4 = pitches[8:12]
+
+    pitches[12:16] = pentultimate_4
+    pitches[8:12] = last_4
