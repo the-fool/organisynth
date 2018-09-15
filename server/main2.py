@@ -121,6 +121,7 @@ def main():
         'metronome_changer': (metro_changer.ws_consumer, metro_changer.obs),
         # 'scale': (scale_changer.ws_consumer, scale_changer.obs),
         'patch_1': (patch_changer_1.ws_consumer, patch_changer_1.obs),
+        'patch_2': (patch_changer_2.ws_consumer, patch_changer_2.obs),
         'cms1': (cms1.ws_consumer, cms1.obs),
         'cms2': (cms2.ws_consumer, cms2.obs),
         'drummer': (drummer_changer.ws_consumer, drummer_changer.obs),

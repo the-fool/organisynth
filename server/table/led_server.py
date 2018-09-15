@@ -103,7 +103,7 @@ class LedTCPServer(asyncio.Protocol):
         self.client = OpcClientAsync(
             loop, '{}:7890'.format(fadecandy_host), verbose=False)
 
-        asyncio.ensure_future(self.client.set_interpolation(False), loop=loop)
+        asyncio.ensure_future(self.client.set_interpolation(True), loop=loop)
 
         self.scale_cube = scale_cube
         self.patch_cube = patch_cube
@@ -176,12 +176,18 @@ class LedTCPServer(asyncio.Protocol):
                 vase_channel[vase_i] = new_color
 
     def do_yurt_pixels(self):
+        # TODO fade out yurt 
         yurt = self.pixels['yurt']
+        slow_pitch = (self.get_pitch(1, (self.ts // 16) % 16))
+        slow_color = COLORS[slow_pitch] if slow_pitch > 0 else GREY
         for pane_i, _ in enumerate(yurt):
-            if pane_i == self.rhythm_index:
+            if self.rhythm_index == 0 and slow_pitch > 0:
+                yurt[pane_i] = slow_color
+            elif pane_i == self.rhythm_index:
                 yurt[pane_i] = self.get_color()
             else:
-                yurt[pane_i] = GREY
+                dim_factor = (16 - self.rhythm_index) / 16
+                yurt[pane_i] = self.dim(slow_color, factor=dim_factor)
 
     def get_color(self):
         patch = self.get_patch()
@@ -231,9 +237,9 @@ class LedTCPServer(asyncio.Protocol):
 
         await self.client.put_pixels(self.pixel_array)
 
-    def dim(self, color):
+    def dim(self, color, factor=DIM_FACTOR):
         def _dim(c):
-            return max(0, c * DIM_FACTOR)
+            return max(0, c * factor)
 
         return (_dim(color[0]), _dim(color[1]), _dim(color[2]))
 
