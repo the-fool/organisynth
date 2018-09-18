@@ -2,13 +2,14 @@ import logging
 
 
 class MonoSequencer:
-    def __init__(self, get_notes, instruments=[], time_multiplier=1):
+    def __init__(self, get_notes, instruments=[], time_multiplier=1, octave_multiplier=0):
         """
         Notes are a mutable, public list of notes
         cbs are a list of objects that implement the BaseInstrument interface,
           -- namely, they have a note_on, note_off methods
         """
         self.get_notes = get_notes
+        self.octave_multiplier = octave_multiplier
         self.off_note = 0
         self.instruments = instruments
 
@@ -30,7 +31,7 @@ class MonoSequencer:
 
         step = int((ts // self.time_multiplier) % len(notes))
 
-        note = notes[step]
+        note = notes[step] + self.octave_multiplier * 12
 
         logging.info('Mono seq trigger step {}, note {}'.format(step, note))
         # when note is == 0, hold

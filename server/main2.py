@@ -85,7 +85,7 @@ def main():
 
     # slow
     mono_seq_2 = MonoSequencer(
-        cms1.get_notes, instruments=[instruments[1]], time_multiplier=16)
+        cms1.get_notes, instruments=[instruments[1]], time_multiplier=16, octave_multiplier=-1)
 
     # make CLOCKER
     clocker = Clocker()

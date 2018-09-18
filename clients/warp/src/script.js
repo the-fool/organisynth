@@ -642,7 +642,7 @@ function initWs() {
 
   */
 
-  const patchWs = new WebSocket(wsUrl('patch'));
+  const patchWs = new WebSocket(wsUrl('patch_1'));
   patchWs.onmessage = function(d) {
     const data = JSON.parse(d.data);
 
@@ -651,7 +651,7 @@ function initWs() {
   };
 
 
-  const scaleWs = new WebSocket(wsUrl('scale'));
+  const scaleWs = new WebSocket(wsUrl('patch_2'));
   scaleWs.onmessage = function(d) {
     const data = JSON.parse(d.data);
 
