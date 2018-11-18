@@ -19,6 +19,11 @@ body {
     border: 0;
     height: 100%;
     width: 100%;
+    box-sizing: border-box;
+
+    * {
+        box-sizing: border-box;
+    }
 }
 
 body {
@@ -227,34 +232,41 @@ h2 {
 }
 
 main {
-    width: 90%;
+    width: 100%;
+    padding-left: 5%;
     height: 100%;
-    margin: auto;
-    position: relative;
+    display: flex;
+    flex-direction: row;
 }
 
 #left {
     left: 0;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
+    position: relative;
+    width: 400px;
 
-#bottom {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 10px;
+    #top {
+        height: 80vh;
+        position: relative;
 
-    >* {
-        margin-top: 20px;
+        >* {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    #bottom {
+        >* {
+            margin-top: 20px;
+        }
     }
 }
 
-#center {
-    width: 80%;
+
+#right {
+    width: 100%;
     margin: auto;
-    height: 85%;
+    height: 100%;
 
     #warp {
         canvas {

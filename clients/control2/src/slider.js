@@ -44,6 +44,9 @@ function makeSlider(container, thickness, length, cb, orientation, label = '') {
             .on("start.interrupt", () => g.interrupt())
             .on("start drag", dragFun));
 
+    const textX = isHorizontal ? '10px' : 0;
+    const textY = isHorizontal ? `${Math.floor(thickness / 2)}` : 0;
+
     const handle = g.insert("rect", ".track-overlay")
         .attr("class", "handle")
         .attrs({
@@ -53,17 +56,13 @@ function makeSlider(container, thickness, length, cb, orientation, label = '') {
             height
         });
 
-    const textX = isHorizontal ? '10px' : 0;
-    const textY = isHorizontal ? `${Math.floor(thickness / 2)}` : 0;
-
-    g.append('text')
+    g.insert('text', '.track-overlay')
         .attrs({
             x: textX,
             y: textY
         })
         .style('font-size', `${Math.floor(thickness * 0.7)}px`)
         .text(label);
-
 
     function onDrag() {
         let mostRecentChange = 0;
