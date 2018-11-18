@@ -1,4 +1,13 @@
-function makeSlider(container, width, height, cb) {
+function makeSlider(container, thickness, length, cb, orientation) {
+    if (orientation !== 'x' && orientation !== 'y') {
+        throw Error('Orientation must be x or y');
+    }
+
+    const isHorizontal = orientation === 'x';
+
+    const width = isHorizontal ? length : thickness;
+    const height = isHorizontal ? thickness : length;
+
     // g is a d3 element
     const g = container.append('svg')
         .attrs({
@@ -9,9 +18,9 @@ function makeSlider(container, width, height, cb) {
 
     const scale = d3.scaleLinear()
         .domain([0, 1])
-        .range([0, height])
+        .range([0, length])
         .clamp(true);
-    
+
     // create a closure
     const dragFun = onDrag();
 
@@ -47,14 +56,19 @@ function makeSlider(container, width, height, cb) {
     function onDrag() {
         let mostRecentChange = 0;
         return function () {
-            const newVal = scale(scale.invert(d3.event.y));
-            handle.attr('height', height - newVal);
-            handle.attr('y', newVal);
+            if (isHorizontal) {
+                const newVal = scale(scale.invert(d3.event.x));
+                handle.attr('width', newVal);
+            } else {
+                const newVal = scale(scale.invert(d3.event.y));
+                handle.attr('height', height - newVal);
+                handle.attr('y', newVal);
+            }
 
             if (newVal !== mostRecentChange) {
                 mostRecentChange = newVal;
                 // do not send a zero
-                const percent = (height - newVal) / height;
+                const percent = (length - newVal) / length;
                 cb(Math.max(percent, 0.01));
             }
         }
