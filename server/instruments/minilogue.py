@@ -2,7 +2,6 @@ from .base import BaseInstrument
 
 
 class Minilogue(BaseInstrument):
-    
     AMP_ATTACK = 16
     AMP_DECAY = 17
     AMP_RELEASE = 19

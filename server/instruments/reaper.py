@@ -10,7 +10,26 @@ class Reaper(BaseInstrument):
     MINI_2_VERB = 12
     MINI_2_DIST = 13
 
+    AMP_ATTACK = 16
+    AMP_DECAY = 17
+    AMP_RELEASE = 19
+    AMP_DECAY = 17
+    EG_ATTACK = 20
+    EG_DECAY = 21
+    VOICE_MODE = 27
+    CUTOFF = 43
+    RESONANCE = 44
+    LFO_RATE = 24
+    LFO_INT = 26
+
     DRUM_VERB = 14
+
+    VCO_1_LEVEL = 39
+    VCO_2_LEVEL = 40
+    
+    def __init__(self, output_name, channel=0, base_prog=79, base_bank=1, *args, **kwargs):
+        super(Reaper, self).__init__(output_name, channel=channel, *args, **kwargs)
+        self.base_prog = base_prog
 
     def mini_1_vol(self, value):
         self._control(self.MINI_1_VOL, int(value))
@@ -32,3 +51,40 @@ class Reaper(BaseInstrument):
 
     def drum_verb(self, value):
         self._control(self.DRUM_VERB, value)
+
+    def program_change(self, program):
+        super(Reaper, self).program_change(self.base_prog + program)
+
+    def level(self, value):
+        self._control(self.VCO_2_LEVEL, value)
+        self._control(self.VCO_1_LEVEL, value)
+
+    def amp_release(self, value):
+        self._control(self.AMP_RELEASE, value)
+
+    def amp_attack(self, value):
+        self._control(self.AMP_ATTACK, value)
+
+    def amp_decay(self, value):
+        self._control(self.AMP_DECAY, value)
+
+    def eg_attack(self, value):
+        self._control(self.EG_ATTACK, value)
+
+    def eg_decay(self, value):
+        self._control(self.EG_DECAY, value)
+
+    def cutoff(self, value):
+        self._control(self.CUTOFF, value)
+
+    def resonance(self, value):
+        self._control(self.RESONANCE, value)
+
+    def beat_on(self, note, step=0):
+        self.note_on(note=note)
+
+    def beat_off(self, note, step=0):
+        self.note_off(note=note)
+
+    def voice_mode(self, val):
+        self._control(self.VOICE_MODE, val)

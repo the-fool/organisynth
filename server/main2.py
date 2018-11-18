@@ -38,7 +38,7 @@ loop = asyncio.get_event_loop()
 
 BLE = True
 LED = True
-SLIDEY = True
+SLIDEY = False
 
 
 def parse_argv():
@@ -54,6 +54,8 @@ def parse_argv():
             LED = False
         elif arg == '--no-slidey':
             SLIDEY = False
+        elif arg == '--slidey':
+            SLIDEY = True
 
 
 def main():
@@ -81,11 +83,16 @@ def main():
     # make MONO_SEQUENCER
 
     # fast
-    mono_seq_1 = MonoSequencer(cms2.get_notes, instruments=[instruments[0]])
+    mono_seq_1 = MonoSequencer(
+        cms2.get_notes, 
+        instruments=[instruments[0]])
 
     # slow
     mono_seq_2 = MonoSequencer(
-        cms1.get_notes, instruments=[instruments[1]], time_multiplier=16, octave_multiplier=-1)
+        cms1.get_notes,
+        instruments=[instruments[1]], 
+        time_multiplier=16, 
+        octave_multiplier=-1)
 
     # make CLOCKER
     clocker = Clocker()
@@ -102,7 +109,9 @@ def main():
             color_seqs=[cms2, cms1])
     # Set up metronome
     metronome_cbs = [
-        clocker.metronome_cb, mono_seq_1.on_beat, mono_seq_2.on_beat,
+        clocker.metronome_cb, 
+        mono_seq_1.on_beat, 
+        mono_seq_2.on_beat,
         drummer.on_beat
     ]
 
@@ -182,7 +191,6 @@ def microbit_init(address):
 
 
 def setup_mbits(vozuz_uart_cb, gupaz_uart_cb):
-
     gupaz = microbit_init(MBIT_GUPAZ)
     vozuz = microbit_init(MBIT_VOZUZ)
     gupaz.subscribe_uart(gupaz_uart_cb)

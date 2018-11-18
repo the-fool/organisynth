@@ -21,13 +21,13 @@ class BaseInstrument:
             x = 127
         return x
 
-    def note_on(self, note, velocity=127, channel=0):
+    def note_on(self, note, velocity=127):
         velocity = BaseInstrument.midify(velocity)
-        self._out_msg('note_on', note=note, velocity=velocity, channel=channel)
+        self._out_msg('note_on', note=note, velocity=velocity)
 
-    def note_off(self, note, channel=0):
+    def note_off(self, note):
         note = BaseInstrument.midify(note)
-        self._out_msg('note_off', note=note, channel=channel)
+        self._out_msg('note_off', note=note)
 
     def _control(self, control, value):
         control = self.midify(control)
@@ -35,9 +35,9 @@ class BaseInstrument:
         self._out_msg('control_change', control=control, value=value)
 
     def _out_msg(self, kind, **kwargs):
-        m = mido.Message(kind, **kwargs)
+        m = mido.Message(kind, channel=self.channel, **kwargs)
         self.outport.send(m)
 
     def program_change(self, program):
-        m = mido.Message('program_change', program=program)
+        m = mido.Message('program_change', program=program, channel=self.channel)
         self.outport.send(m)

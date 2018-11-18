@@ -8,11 +8,13 @@ MIDI_OUTPUTS = [
 instrument_dict = {
     'minilogue_1': Minilogue(MIDI_OUTPUTS[0]),
     'minilogue_2': Minilogue(MIDI_OUTPUTS[1]),
-    'reaper': Reaper(MIDI_OUTPUTS[2])
+    'reaper': Reaper(MIDI_OUTPUTS[2], channel=1),
+    'synth_fast': Reaper(MIDI_OUTPUTS[2], channel=2),
+    'synth_slow': Reaper(MIDI_OUTPUTS[2], channel=3)
 }
 
 instruments = [
-    instrument_dict['minilogue_1'],
-    instrument_dict['minilogue_2'],
+    instrument_dict['synth_fast'],
+    instrument_dict['synth_slow'],
     instrument_dict['reaper']
 ]

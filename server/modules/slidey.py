@@ -54,11 +54,11 @@ class Slidey:
     def note_on(self, note):
         print('note', note)
         for i in self.instruments:
-            i.note_on(note, channel=3)
+            i.note_on(note)
 
     def note_off(self, note):
         for i in self.instruments:
-            i.note_off(note, channel=3)
+            i.note_off(note)
 
     def get_note(self, x):
         return 60 + self.scale_cube.scale[x - 1 % 7]
