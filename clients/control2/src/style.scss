@@ -1,0 +1,406 @@
+$blue: #00a8f7;
+$bar-bg: #202020;
+$bk: #000;
+$bar: $blue;
+
+@font-face {
+    font-family: euro-bold;
+    src: url('/lib/EurostileLTStd-BoldEx2.otf');
+}
+
+@font-face {
+    font-family: euro;
+    src: url('/lib/EurostileLTStd-Ex2.otf');
+}
+
+html,
+body {
+    margin: 0;
+    border: 0;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: $bk;
+}
+
+/* Customize the label (the container) */
+.sci-ui {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+
+    /* Hide the browser's default radio button */
+    input {
+        position: absolute;
+        opacity: 0;
+    }
+
+    &.radio {
+
+        /* Create a custom radio button */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        &:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        input:checked~.checkmark {
+            background-color: $blue;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .checkmark:after {
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+
+
+        /* On mouse-over, add a grey background color */
+        .container:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        .container input:checked~.checkmark {
+            background-color: $blue;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+
+
+        /* Show the checkmark when checked */
+        .container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    }
+
+    &.checkbox {
+
+        /* Create a custom checkbox */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+        }
+
+        /* On mouse-over, add a grey background color */
+        &:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        /* When the checkbox is checked, add a blue background */
+        input:checked~.checkmark {
+            background-color: $blue;
+        }
+
+        /* Create the checkmark/indicator (hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the checkmark when checked */
+        input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the checkmark/indicator */
+        .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+        }
+    }
+
+
+    .button {
+        background-color: $blue;
+        /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+
+        &.outline {
+            background-color: transparent;
+            border: 2px solid $blue;
+            /* Green */
+
+            &:hover {}
+
+            &.active {
+                background-color: $blue;
+                color: white;
+            }
+        }
+    }
+}
+
+.ticks {
+    font: 10px sans-serif;
+}
+
+h1,
+h2 {
+    color: white;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 20px;
+    font-family: euro-bold;
+}
+
+h2 {
+    font-size: 14px;
+    font-family: euro;
+}
+
+main {
+    width: 1300px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .row {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        flex-direction: row;
+    }
+}
+
+
+.slider {
+    .track,
+    .track-overlay {
+        fill-opacity: 0;
+        stroke-linecap: round;
+    }
+
+    .track {
+        stroke: #000;
+        stroke-opacity: 0.3;
+        stroke-width: 2px;
+    }
+
+    .track-overlay {
+        pointer-events: stroke;
+        stroke-width: 50px;
+        stroke: transparent;
+        cursor: crosshair;
+    }
+
+    .handle {
+        fill: $bar;
+    }
+
+    .track-inset {
+        stroke: 0;
+        fill-opacity: 1;
+        fill: $bar-bg;
+    }
+}
+
+.widget {
+    padding: 15px;
+    flex: 1;
+}
+
+#bpm-widget {
+    max-width: 350px;
+
+    #flower-svg {
+        .cls-1 {
+            fill: #101010;
+            opacity: 1;
+        }
+
+        .petal {
+            fill: transparent;
+
+            &.active {
+                fill: $bar;
+            }
+        }
+    }
+
+    .row {
+        justify-content: baseline;
+        align-items: center;
+    }
+
+    .indicator-light {
+        fill: transparent;
+
+        &.active {
+            fill: red;
+        }
+    }
+}
+
+#beat-widget {
+    label {
+        color: white;
+        text-transform: uppercase;
+    }
+
+    .controls {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        label,
+        label>* {
+            color: white;
+            font-family: euro;
+            text-transform: uppercase;
+        }
+
+        .col {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &.families {
+                justify-content: space-around;
+            }
+
+            &.reverb {
+                margin-left: 2rem;
+            }
+        }
+
+        .elements {
+            .button {
+                font-family: euro;
+
+                &:not(:last-child) {
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+}
+
+#synth-widget {
+    display: flex;
+    justify-content: space-between;
+
+    .single-synth {
+        width: 600px;
+    }
+
+    .synth-viewer {
+        display: flex;
+        flex-direction: row;
+
+
+        .left {
+            width: 250px;
+        }
+
+        .right {
+            width: 350px;
+        }
+
+        .attractor {
+            overflow: hidden;
+            text-align: center;
+            width: 200px;
+            border: 2px solid white;
+            padding: 2px;
+            border-radius: 10px;
+        }
+    }
+}
+
+
+#instruments-widget {
+    .brush {
+        .overlay {
+            stroke: white;
+        }
+
+        .handle--s {
+            fill-opacity: 0;
+            stroke-opacity: 0;
+        }
+    }
+
+    .selection {
+        fill: steelblue;
+        fill-opacity: 1;
+    }
+}

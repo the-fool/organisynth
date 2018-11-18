@@ -1,6 +1,5 @@
 function makeSlider(g, x, width, height, cb) {
-    // g is a d3 elm
-  console.log(x, width, height)
+    // g is a d3 element
     let mostRecentChange = 0;
     height = height <= 0 ? 1 : height;
     makeTrack(g, onDrag);
