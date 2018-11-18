@@ -269,6 +269,10 @@ main {
     height: 100%;
 
     #warp {
+        position: relative;
+        width: 95vh;
+        height: 95vh;
+        margin: auto;
         canvas {
             width: 100%;
             max-width: 100%;
@@ -278,6 +282,7 @@ main {
         }
 
         svg#table-svg {
+            position: absolute;
             height: 100%;
             width: 100%;
             mix-blend-mode: hard-light;

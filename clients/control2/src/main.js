@@ -2,7 +2,7 @@ const bpmContainer = d3.select('#bpm');
 const verbContainer = d3.select('#verb');
 const distoContainer = d3.select('#disto');
 
-const leftWidth = 400;
+const leftWidth = 450;
 
 $('#left').css('width', leftWidth + 'px');
 
