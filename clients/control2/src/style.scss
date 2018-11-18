@@ -227,22 +227,37 @@ h2 {
 }
 
 main {
-    width: 1300px;
+    width: 90%;
+    height: 100%;
     margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    position: relative;
+}
 
-    .row {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        flex-direction: row;
+#left {
+    left: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#bottom {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 5%;
+    > * {
+        margin-top: 20px;
     }
 }
 
-
 .slider {
+
+    text {
+        fill: white;
+        font-family: euro;
+        alignment-baseline: middle;
+    }
+
     .track,
     .track-overlay {
         fill-opacity: 0;
@@ -267,46 +282,8 @@ main {
     }
 
     .track-inset {
-        stroke: 0;
         fill-opacity: 1;
         fill: $bar-bg;
-    }
-}
-
-.widget {
-    padding: 15px;
-    flex: 1;
-}
-
-#bpm-widget {
-    max-width: 350px;
-
-    #flower-svg {
-        .cls-1 {
-            fill: #101010;
-            opacity: 1;
-        }
-
-        .petal {
-            fill: transparent;
-
-            &.active {
-                fill: $bar;
-            }
-        }
-    }
-
-    .row {
-        justify-content: baseline;
-        align-items: center;
-    }
-
-    .indicator-light {
-        fill: transparent;
-
-        &.active {
-            fill: red;
-        }
     }
 }
 
@@ -351,56 +328,5 @@ main {
                 }
             }
         }
-    }
-}
-
-#synth-widget {
-    display: flex;
-    justify-content: space-between;
-
-    .single-synth {
-        width: 600px;
-    }
-
-    .synth-viewer {
-        display: flex;
-        flex-direction: row;
-
-
-        .left {
-            width: 250px;
-        }
-
-        .right {
-            width: 350px;
-        }
-
-        .attractor {
-            overflow: hidden;
-            text-align: center;
-            width: 200px;
-            border: 2px solid white;
-            padding: 2px;
-            border-radius: 10px;
-        }
-    }
-}
-
-
-#instruments-widget {
-    .brush {
-        .overlay {
-            stroke: white;
-        }
-
-        .handle--s {
-            fill-opacity: 0;
-            stroke-opacity: 0;
-        }
-    }
-
-    .selection {
-        fill: steelblue;
-        fill-opacity: 1;
     }
 }

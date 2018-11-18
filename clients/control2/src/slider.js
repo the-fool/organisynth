@@ -1,4 +1,4 @@
-function makeSlider(container, thickness, length, cb, orientation) {
+function makeSlider(container, thickness, length, cb, orientation, label = '') {
     if (orientation !== 'x' && orientation !== 'y') {
         throw Error('Orientation must be x or y');
     }
@@ -53,23 +53,39 @@ function makeSlider(container, thickness, length, cb, orientation) {
             height
         });
 
+    const textX = isHorizontal ? '10px' : 0;
+    const textY = isHorizontal ? `${Math.floor(thickness / 2)}` : 0;
+
+    g.append('text')
+        .attrs({
+            x: textX,
+            y: textY
+        })
+        .style('font-size', `${Math.floor(thickness * 0.7)}px`)
+        .text(label);
+
+
     function onDrag() {
         let mostRecentChange = 0;
+
+        function performCb(val) {
+            if (val !== mostRecentChange) {
+                mostRecentChange = val;
+                // do not send a zero
+                const percent = (length - val) / length;
+                cb(Math.max(percent, 0.01));
+            }
+        }
         return function () {
             if (isHorizontal) {
                 const newVal = scale(scale.invert(d3.event.x));
                 handle.attr('width', newVal);
+                performCb(newVal);
             } else {
                 const newVal = scale(scale.invert(d3.event.y));
                 handle.attr('height', height - newVal);
                 handle.attr('y', newVal);
-            }
-
-            if (newVal !== mostRecentChange) {
-                mostRecentChange = newVal;
-                // do not send a zero
-                const percent = (length - newVal) / length;
-                cb(Math.max(percent, 0.01));
+                performCb(newVal);
             }
         }
     }
