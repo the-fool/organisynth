@@ -13,7 +13,6 @@ class Reaper(BaseInstrument):
     AMP_ATTACK = 16
     AMP_DECAY = 17
     AMP_RELEASE = 19
-    AMP_DECAY = 17
     EG_ATTACK = 20
     EG_DECAY = 21
     VOICE_MODE = 27
@@ -22,8 +21,8 @@ class Reaper(BaseInstrument):
     LFO_RATE = 24
     LFO_INT = 26
 
-    DRUM_VERB = 14
-
+    REVERB = 14
+    DISTORTION = 18
     VCO_1_LEVEL = 39
     VCO_2_LEVEL = 40
     
@@ -49,8 +48,11 @@ class Reaper(BaseInstrument):
     def mini_2_verb(self, value):
         self._control(self.MINI_2_VERB, value)
 
-    def drum_verb(self, value):
-        self._control(self.DRUM_VERB, value)
+    def reverb(self, value):
+        self._control(self.REVERB, value)
+    
+    def distortion(self, value):
+        self._control(self.DISTORTION, value)
 
     def program_change(self, program):
         super(Reaper, self).program_change(self.base_prog + program)

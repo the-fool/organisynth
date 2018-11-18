@@ -2,12 +2,22 @@ const bpmContainer = d3.select('#bpm');
 const verbContainer = d3.select('#verb');
 const distoContainer = d3.select('#disto');
 
+
+function wsConnect(name) {
+  const wsUrl = path => `ws://${window.location.hostname}:7700/${path}`;
+  const ws = new WebSocket(wsUrl(name));
+  return ws;
+}
+
+// const clockWs = wsConnect('clocker');
+const bpmWs = wsConnect('metronome_changer');
+const drumWs = wsConnect('drummer');
+const fxWs = wsConnect('fx_reaper');
+
+
 const leftWidth = 450;
 
-//$('#left').css('width', leftWidth + 'px');
-
-
-makeSlider(bpmContainer, 40, 600, console.log, 'y');
+makeSlider(bpmContainer, 40, 600, throttle(changeBpm, 200), 'y');
 makeSlider(verbContainer, 30, leftWidth, throttle(verbify, 200), 'x', 'Flux');
 makeSlider(distoContainer, 30, leftWidth, throttle(distort, 200), 'x', 'Force');
 
@@ -32,9 +42,29 @@ function setFilter() {
 function verbify(val) {
     blur = calcBlur(val) + 'px';
     requestAnimationFrame(setFilter);
+    fxChange(val, 'reverb');
 }
 
 function distort(val) {
     saturate = calcSaturate(val);
     requestAnimationFrame(setFilter);
+    fxChange(val, 'distortion');
+}
+
+function fxChange(val, kind) {
+    // val [0,1]
+    switch (kind) {
+        case 'distortion': {
+            fxWs.send(JSON.stringify({kind: 'distortion', payload: val}));
+            break;
+        }
+        case 'reverb': {
+            fxWs.send(JSON.stringify({kind: 'reverb', payload: val}));
+            break;
+        }
+    }
+}
+
+function changeBpm(val) {
+
 }

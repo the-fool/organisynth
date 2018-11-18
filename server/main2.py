@@ -72,8 +72,6 @@ def main():
 
     fx_cbs = make_fx_cbs()
 
-    mini_1_fx = FxManager(fx_cbs['mini_1'])
-    mini_2_fx = FxManager(fx_cbs['mini_2'])
     reaper_fx = FxManager(fx_cbs['reaper'])
 
     # make COLOR_MONO_SEQUENCER
@@ -134,8 +132,6 @@ def main():
         'cms1': (cms1.ws_consumer, cms1.obs),
         'cms2': (cms2.ws_consumer, cms2.obs),
         'drummer': (drummer_changer.ws_consumer, drummer_changer.obs),
-        'fx_mini_1': (mini_1_fx.ws_consumer, mini_1_fx.obs),
-        'fx_mini_2': (mini_2_fx.ws_consumer, mini_2_fx.obs),
         'fx_reaper': (reaper_fx.ws_consumer, reaper_fx.obs),
     }
 
@@ -261,7 +257,10 @@ def make_fx_cbs():
             'distortion': scale_it(getattr(reaper, 'mini_{}_dist'.format(i + 1)))
         }
 
-    reaper_cbs = {'drum_reverb': scale_it(reaper.drum_verb)}
+    reaper_cbs = {
+        'reverb': scale_it(reaper.reverb),
+        'distortion': scale_it(reaper.distortion)
+    }
 
     return {
         'mini_1': make_mini_cbs(0),
