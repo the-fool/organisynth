@@ -71,7 +71,7 @@ function makeSlider(container, thickness, length, cb, orientation, label = '') {
             if (val !== mostRecentChange) {
                 mostRecentChange = val;
                 // do not send a zero
-                const percent = (length - val) / length;
+                const percent = isHorizontal ? val / length : (length - val) / length;
                 cb(Math.max(percent, 0.01));
             }
         }

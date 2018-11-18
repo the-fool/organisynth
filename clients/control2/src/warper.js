@@ -60,10 +60,10 @@ function defaultify() {
   NUM_LEVELS = 4;
   LEVEL_DEPTH = 1600;
 
-  DEF_BRIGHTNESS = 1;
-  DEF_SATURATION = 0.8;
+  DEF_BRIGHTNESS = 2;
+  DEF_SATURATION = .8;
   ORBIT_REGEN_COOLDOWN = 3000;
-  SPRITE_SIZE = 5;
+  SPRITE_SIZE = 2;
 
   // Orbit parameters constraints
   A_MIN = -30;
@@ -118,7 +118,7 @@ function init() {
     orbit.subsets.push(subsetPoints);
   }
 
-  const sprite1 = THREE.ImageUtils.loadTexture("/lib/poppy.jpg");
+  const sprite1 = THREE.ImageUtils.loadTexture("/lib/poppy.jpeg");
 
   container = document.getElementById('warp');
 
@@ -126,7 +126,7 @@ function init() {
   camera.position.z = SCALE_FACTOR / 2;
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x000000, 0.0010);
+  scene.fog = new THREE.FogExp2(0x000000, 0.0004);
 
   redoHues();
   generateOrbit();
