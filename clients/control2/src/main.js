@@ -31,8 +31,6 @@ const calcBlur = ranger(minBlur, maxBlur);
 
 let blur = '0px';
 let saturate = 1;
-let canvas = $('canvas');
-setTimeout(() => canvas = $('canvas'), 4000);
 
 /**
  * set up power buttons
@@ -86,7 +84,6 @@ $('.button').click(function() {
 
 function setFilter() {
     $('canvas').css('filter', `blur(${blur}) saturate(${saturate})`);
-    console.log(canvas, blur, saturate);
 }
 
 function verbify(val) {
