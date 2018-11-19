@@ -15,7 +15,7 @@ const drumWs = wsConnect('drummer');
 const fxWs = wsConnect('fx_reaper');
 
 
-const leftWidth = 450;
+const leftWidth = 400;
 
 makeSlider(bpmContainer, 40, 500, throttle(changeBpm, 200), 'y');
 makeSlider(verbContainer, 30, leftWidth, throttle(verbify, 200), 'x', 'Flux');
@@ -47,7 +47,7 @@ function handleA(on) {
     $('#btna').toggleClass('pulsing', on);
 }
 function handleB(on) {
-
+    $('#Petals').toggleClass('pulsing', on);
 }
 $('#power-buttons .button').click(function() {
     const el = $(this);

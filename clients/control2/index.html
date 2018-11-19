@@ -15,18 +15,25 @@
 
 <body>
     <main>
-        <div id="left" style="width: 450px">
+        <div id="left" style="width: 400px">
             <div id="top">
                 <div id="bpm" class="slider"></div>
-                <div id="beat"></div>
+                <div id="beat">
+                    <div id="beat-buttons" class="elements sci-ui">
+                        <a id="beata" class="button outline">Thump</a>
+                        <a id="beatb" class="button outline">Bapp</a>
+                        <a id="beatc" class="button outline">Kchck</a>
+                        <a id="beatd" class="button outline">Zwap</a>
+                    </div>
+                </div>
             </div>
 
             <div id="bottom">
                 <div id="verb" class="slider"></div>
                 <div id="disto" class="slider"></div>
                 <div id="power-buttons" class="elements sci-ui">
-                  <a id="btna" class="button outline">Dark Quanta</a>
-                  <a id="btnb" class="button outline">Entangled Waves</a>
+                    <a id="btna" class="button outline">Dark Quanta</a>
+                    <a id="btnb" class="button outline">Entangled Waves</a>
                 </div>
             </div>
         </div>
@@ -35,6 +42,10 @@
             <div id="warp">
                 <svg id="table-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1089 1089">
                     <defs>
+                        <linearGradient id="grad1">
+                            <stop id="stop1" offset="0%" />
+                            <stop id="stop2" offset="100%" />
+                        </linearGradient>
                         <style>
                             .cls-10,
                             .cls-5,

@@ -1,8 +1,11 @@
 $blue: #00a8f7;
 $pink: #d800f7;
 $bar-bg: #202020;
+$green: #4caf50;
+$yellow: #ffeb3b;
 $bk: #000;
 $bar: $blue;
+$bkgrnd: #131313;
 
 @font-face {
     font-family: euro-bold;
@@ -19,13 +22,43 @@ $bar: $blue;
         fill: $blue;
         background-color: $blue;
     }
+
     50% {
         fill: $pink;
         background-color: $pink;
     }
+
     100% {
         fill: $blue;
         background-color: $blue;
+    }
+}
+
+#stop1 {
+    animation: change-color1 2s ease-in-out infinite alternate;
+}
+
+#stop2 {
+    animation: change-color2 5s ease-in-out infinite alternate;
+}
+
+@keyframes change-color1 {
+    0% {
+        stop-color: $pink;
+    }
+
+    100% {
+        stop-color: $yellow;
+    }
+}
+
+@keyframes change-color2 {
+    0% {
+        stop-color: $blue;
+    }
+
+    100% {
+        stop-color: $pink;
     }
 }
 
@@ -35,6 +68,15 @@ rect.pulsing {
 
 .button.pulsingNOT {
     animation: twoColor 3s linear infinite;
+}
+
+#Petals.pulsing {
+    fill: url(#grad1);
+    opacity: 0.6;
+
+    .petal {
+        opacity: 0.6 !important;
+    }
 }
 
 html,
@@ -51,7 +93,7 @@ body {
 }
 
 body {
-    background-color: $bk;
+    background-color: $bkgrnd;
 }
 
 /* Customize the label (the container) */
@@ -278,11 +320,30 @@ main {
             top: 50%;
             transform: translateY(-50%);
         }
+
+        #beat {
+            position: absolute;
+            right: 0;
+
+            #beat-buttons {
+                display: flex;
+                flex-direction: column;
+                a.button:not(:first-child) {
+                    margin-top: 15px;
+                }
+            }
+        }
     }
 
     #bottom {
         >* {
             margin-top: 20px;
+        }
+
+        #power-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
         }
     }
 }
