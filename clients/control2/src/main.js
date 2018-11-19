@@ -17,7 +17,7 @@ const fxWs = wsConnect('fx_reaper');
 
 const leftWidth = 400;
 
-makeSlider(bpmContainer, 40, 500, throttle(changeBpm, 200), 'y');
+makeSlider(bpmContainer, 40, 500, throttle(changeBpm, 200), 'y', 'Velo');
 makeSlider(verbContainer, 30, leftWidth, throttle(verbify, 200), 'x', 'Flux');
 makeSlider(distoContainer, 30, leftWidth, throttle(distort, 200), 'x', 'Force');
 
