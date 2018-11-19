@@ -12,7 +12,7 @@ class Reaper(BaseInstrument):
 
     AMP_ATTACK = 16
     AMP_DECAY = 17
-    AMP_RELEASE = 19
+    AMP_RELEASE = 14
     EG_ATTACK = 20
     EG_DECAY = 21
     VOICE_MODE = 27

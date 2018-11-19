@@ -60,10 +60,10 @@ function defaultify() {
   NUM_LEVELS = 4;
   LEVEL_DEPTH = 1600;
 
-  DEF_BRIGHTNESS = 2;
+  DEF_BRIGHTNESS = 1;
   DEF_SATURATION = .8;
   ORBIT_REGEN_COOLDOWN = 3000;
-  SPRITE_SIZE = 2;
+  SPRITE_SIZE = 5;
 
   // Orbit parameters constraints
   A_MIN = -30;
@@ -118,7 +118,7 @@ function init() {
     orbit.subsets.push(subsetPoints);
   }
 
-  const sprite1 = THREE.ImageUtils.loadTexture("/lib/poppy.jpeg");
+  const sprite1 = THREE.ImageUtils.loadTexture("/lib/poppy.jpg");
 
   container = document.getElementById('warp');
 
@@ -190,12 +190,12 @@ function animate() {
 function render() {
 
   if (camera.position.x >= -CAMERA_BOUND && camera.position.x <= CAMERA_BOUND) {
-    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.x += (mouseX - camera.position.x) * 0.015;
     if (camera.position.x < -CAMERA_BOUND) camera.position.x = -CAMERA_BOUND;
     if (camera.position.x > CAMERA_BOUND) camera.position.x = CAMERA_BOUND;
   }
   if (camera.position.y >= -CAMERA_BOUND && camera.position.y <= CAMERA_BOUND) {
-    camera.position.y += (-mouseY - camera.position.y) * 0.05;
+    camera.position.y += (-mouseY - camera.position.y) * 0.015;
     if (camera.position.y < -CAMERA_BOUND) camera.position.y = -CAMERA_BOUND;
     if (camera.position.y > CAMERA_BOUND) camera.position.y = CAMERA_BOUND;
   }

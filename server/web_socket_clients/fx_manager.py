@@ -19,7 +19,6 @@ class FxManager:
         cb = self.cbs.get(kind, None)
         if cb is None:
             return
-
         cb(payload)
 
         # echo to all subscribers

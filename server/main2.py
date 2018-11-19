@@ -263,7 +263,5 @@ def make_fx_cbs():
     }
 
     return {
-        'mini_1': make_mini_cbs(0),
-        'mini_2': make_mini_cbs(1),
         'reaper': reaper_cbs
     }

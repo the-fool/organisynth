@@ -30,6 +30,7 @@ class BaseInstrument:
         self._out_msg('note_off', note=note)
 
     def _control(self, control, value):
+        print('Control change', control, value)
         control = self.midify(control)
         value = self.midify(value)
         self._out_msg('control_change', control=control, value=value)
