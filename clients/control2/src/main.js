@@ -37,19 +37,34 @@ setTimeout(() => canvas = $('canvas'), 4000);
 /**
  * set up power buttons
  */
+
 const powerButtons = {
     'btna': false,
-    'btnb': false
+    'btnb': false,
+    'beata': false,
+    'beatb': false,
+    'beatc': false,
+    'beatd': false
 };
 
 function handleA(on) {
+    const payload = on ? 1 : 0.01;
+    const msg = {kind: 'special1', payload};
     $('rect.handle').toggleClass('pulsing', on);
     $('#btna').toggleClass('pulsing', on);
+    fxWs.send(JSON.stringify(msg));
 }
+
 function handleB(on) {
+    const payload = on ? 1 : 0.01;
+    const msg = {kind: 'special2', payload};
     $('#Petals').toggleClass('pulsing', on);
+    fxWs.send(JSON.stringify(msg));
 }
-$('#power-buttons .button').click(function() {
+
+
+
+$('.button').click(function() {
     const el = $(this);
     const key = el.attr('id');
     const oldState = powerButtons[key];
@@ -57,21 +72,16 @@ $('#power-buttons .button').click(function() {
     powerButtons[key] = newState;
     el.toggleClass('active', newState);
 
-    const payload = newState ? 1 : 0.01;
-    let msg;
     switch (key) {
         case 'btna': {
-            msg = {kind: 'special1', payload};
             handleA(newState);
             break;
         }
         case 'btnb': {
-            msg = {kind: 'special2', payload};
             handleB(newState);
             break;
         }
     }
-    fxWs.send(JSON.stringify(msg));
 });
 
 function setFilter() {
