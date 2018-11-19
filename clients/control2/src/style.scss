@@ -1,4 +1,5 @@
 $blue: #00a8f7;
+$pink: #d800f7;
 $bar-bg: #202020;
 $bk: #000;
 $bar: $blue;
@@ -11,6 +12,29 @@ $bar: $blue;
 @font-face {
     font-family: euro;
     src: url('/lib/EurostileLTStd-Ex2.otf');
+}
+
+@keyframes twoColor {
+    0% {
+        fill: $blue;
+        background-color: $blue;
+    }
+    50% {
+        fill: $pink;
+        background-color: $pink;
+    }
+    100% {
+        fill: $blue;
+        background-color: $blue;
+    }
+}
+
+rect.pulsing {
+    animation: twoColor 3s linear infinite;
+}
+
+.button.pulsingNOT {
+    animation: twoColor 3s linear infinite;
 }
 
 html,
@@ -45,7 +69,8 @@ body {
         opacity: 0;
     }
 
-    button, a {
+    button,
+    a {
         font-family: euro;
         width: 10rem;
     }
@@ -273,6 +298,7 @@ main {
         width: 95vh;
         height: 95vh;
         margin: auto;
+
         canvas {
             width: 100%;
             max-width: 100%;

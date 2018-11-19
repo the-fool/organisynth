@@ -531,7 +531,6 @@ function beat() {
       clearInterval(intervalId);
     }
   }, BEAT_INTERVAL - speed / 5);
-
 }
 
 function findNearest() {

@@ -42,6 +42,13 @@ const powerButtons = {
     'btnb': false
 };
 
+function handleA(on) {
+    $('rect.handle').toggleClass('pulsing', on);
+    $('#btna').toggleClass('pulsing', on);
+}
+function handleB(on) {
+
+}
 $('#power-buttons .button').click(function() {
     const el = $(this);
     const key = el.attr('id');
@@ -55,10 +62,12 @@ $('#power-buttons .button').click(function() {
     switch (key) {
         case 'btna': {
             msg = {kind: 'special1', payload};
+            handleA(newState);
             break;
         }
         case 'btnb': {
             msg = {kind: 'special2', payload};
+            handleB(newState);
             break;
         }
     }
