@@ -259,7 +259,9 @@ def make_fx_cbs():
 
     reaper_cbs = {
         'reverb': scale_it(reaper.reverb),
-        'distortion': scale_it(reaper.distortion)
+        'distortion': scale_it(reaper.distortion),
+        'special1': scale_it(reaper.special_1),
+        'special2': scale_it(reaper.special_2)
     }
 
     return {

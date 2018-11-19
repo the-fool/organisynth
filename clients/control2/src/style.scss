@@ -34,13 +34,8 @@ body {
 .sci-ui {
     display: block;
     position: relative;
-    padding-left: 35px;
-    margin-bottom: 12px;
     cursor: pointer;
     font-size: 22px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
 
 
@@ -48,6 +43,11 @@ body {
     input {
         position: absolute;
         opacity: 0;
+    }
+
+    button, a {
+        font-family: euro;
+        width: 10rem;
     }
 
     &.radio {
@@ -245,7 +245,7 @@ main {
     width: 400px;
 
     #top {
-        height: 80vh;
+        height: 70vh;
         position: relative;
 
         >* {

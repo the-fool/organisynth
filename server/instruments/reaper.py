@@ -23,6 +23,10 @@ class Reaper(BaseInstrument):
 
     REVERB = 14
     DISTORTION = 18
+    
+    SPECIAL_1 = 19
+    SPECIAL_2 = 20
+
     VCO_1_LEVEL = 39
     VCO_2_LEVEL = 40
     
@@ -42,6 +46,12 @@ class Reaper(BaseInstrument):
     def mini_2_dist(self, value):
         self._control(self.MINI_2_DIST, value)
 
+    def special_1(self, value):
+        self._control(self.SPECIAL_1, value)
+    
+    def special_2(self, value):
+        self._control(self.SPECIAL_2, value)
+    
     def mini_1_verb(self, value):
         self._control(self.MINI_1_VERB, value)
 

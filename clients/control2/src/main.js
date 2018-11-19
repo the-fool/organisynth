@@ -17,7 +17,7 @@ const fxWs = wsConnect('fx_reaper');
 
 const leftWidth = 450;
 
-makeSlider(bpmContainer, 40, 600, throttle(changeBpm, 200), 'y');
+makeSlider(bpmContainer, 40, 500, throttle(changeBpm, 200), 'y');
 makeSlider(verbContainer, 30, leftWidth, throttle(verbify, 200), 'x', 'Flux');
 makeSlider(distoContainer, 30, leftWidth, throttle(distort, 200), 'x', 'Force');
 
@@ -33,6 +33,37 @@ let blur = '0px';
 let saturate = 1;
 let canvas = $('canvas');
 setTimeout(() => canvas = $('canvas'), 4000);
+
+/**
+ * set up power buttons
+ */
+const powerButtons = {
+    'btna': false,
+    'btnb': false
+};
+
+$('#power-buttons .button').click(function() {
+    const el = $(this);
+    const key = el.attr('id');
+    const oldState = powerButtons[key];
+    const newState = !oldState;
+    powerButtons[key] = newState;
+    el.toggleClass('active', newState);
+
+    const payload = newState ? 1 : 0.01;
+    let msg;
+    switch (key) {
+        case 'btna': {
+            msg = {kind: 'special1', payload};
+            break;
+        }
+        case 'btnb': {
+            msg = {kind: 'special2', payload};
+            break;
+        }
+    }
+    fxWs.send(JSON.stringify(msg));
+});
 
 function setFilter() {
     $('canvas').css('filter', `blur(${blur}) saturate(${saturate})`);
