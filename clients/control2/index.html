@@ -18,13 +18,32 @@
         <div id="left" style="width: 400px">
             <div id="top">
                 <div id="bpm" class="slider"></div>
+                <svg id="bpm-label" class="label">
+                    <text>Velocity</text>
+                </svg>
                 <div id="beat">
                     <div id="beat-buttons" class="elements sci-ui">
-                        <a id="beata" class="button outline">Thump</a>
-                        <a id="beatb" class="button outline">Bapp</a>
-                        <a id="beatc" class="button outline">Kchck</a>
-                        <a id="beatd" class="button outline">Zwap</a>
+                        <a id="beata" class="button outline active">Thump</a>
+                        <a id="beatb" class="button outline active">Bipp</a>
+                        <a id="beatc" class="button outline active">Kchck</a>
+                        <a id="beatd" class="button outline active">Zwap</a>
                     </div>
+
+                    <div id="beats" class="sci-ui">
+                        <a id="family-1" data-value="0" class="button outline radio active">X</a>
+                        <a id="family-2" data-value="1" class="button outline radio">Y</a>
+                    </div>
+                </div>
+                <svg id="beat-label" class="label">
+                    <text>Rhythm</text>
+                </svg>
+                <div id="title">
+                    <h1>
+                        Organisynth
+                    </h1>
+                    <h2>
+                        Control Deck
+                    </h2>
                 </div>
             </div>
 
@@ -38,6 +57,13 @@
             </div>
         </div>
 
+        <!--
+
+        <svg viewbox="0 0 100 100">
+            <line x1="50" x2="50" y1="0" y2="100" stroke="white"></line>
+        </svg>
+
+        -->
         <div id="right">
             <div id="warp">
                 <svg id="table-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1089 1089">

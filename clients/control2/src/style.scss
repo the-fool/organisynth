@@ -5,7 +5,8 @@ $green: #4caf50;
 $yellow: #ffeb3b;
 $bk: #000;
 $bar: $blue;
-$bkgrnd: #131313;
+$bkgrnd: #01010e;
+$btn-width: 10rem;
 
 @font-face {
     font-family: euro-bold;
@@ -66,7 +67,7 @@ rect.pulsing {
     animation: twoColor 3s linear infinite;
 }
 
-.button.pulsingNOT {
+.button.pulsing.active {
     animation: twoColor 3s linear infinite;
 }
 
@@ -96,6 +97,54 @@ body {
     background-color: $bkgrnd;
 }
 
+svg.label {
+    height: 100%;
+
+    text {
+        fill: white;
+        font-family: euro;
+        writing-mode: tb;
+        alignment-baseline: after-edge;
+        font-size: 36px;
+    }
+}
+
+#bpm-label {
+    left: 40px;
+}
+
+#beat {
+    width: $btn-width;
+
+    #beats {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        .button {
+            width: 45%;
+            margin-top: 15px;
+            padding: 10px;
+        }
+    }
+}
+
+#title {
+    top: initial !important;
+
+    right: 0;
+    bottom: 40px;
+
+    h2 {
+        margin-bottom: 0;
+    }
+}
+
+#beat-label {
+    right: 0;
+    width: 40px;
+}
+
 /* Customize the label (the container) */
 .sci-ui {
     display: block;
@@ -114,7 +163,7 @@ body {
     button,
     a {
         font-family: euro;
-        width: 10rem;
+        width: $btn-width;
     }
 
     &.radio {
@@ -252,6 +301,7 @@ body {
 
     .button {
         background-color: $blue;
+        border-radius: 3px;
         /* Green */
         border: none;
         color: white;
@@ -263,10 +313,12 @@ body {
 
         &.outline {
             background-color: transparent;
-            border: 2px solid $blue;
+            border: 3px solid $blue;
             /* Green */
 
-            &:hover {}
+            &:hover {
+                background-color: #072135;
+            }
 
             &.active {
                 background-color: $blue;
@@ -289,7 +341,7 @@ h2 {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 28px;
     font-family: euro-bold;
 }
 
@@ -297,6 +349,8 @@ h2 {
     font-size: 14px;
     font-family: euro;
 }
+
+
 
 main {
     width: 100%;
@@ -308,27 +362,28 @@ main {
 }
 
 #left {
+    padding-top: 50px;
     left: 0;
     position: relative;
     width: 400px;
 
     #top {
-        height: 70vh;
+        height: 580px;
         position: relative;
 
         >* {
             position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 0;
         }
 
         #beat {
             position: absolute;
-            right: 0;
+            right: 45px;
 
             #beat-buttons {
                 display: flex;
                 flex-direction: column;
+
                 a.button:not(:first-child) {
                     margin-top: 15px;
                 }
@@ -356,6 +411,7 @@ main {
     height: 100%;
 
     #warp {
+        overflow: hidden;
         position: relative;
         width: 95vh;
         height: 95vh;
@@ -366,6 +422,11 @@ main {
             max-width: 100%;
             height: 100%;
             max-height: 100%;
+            clip-path: url('#clip');
+        }
+
+        canvas::before {
+            content: '';
             clip-path: url('#clip');
         }
 
@@ -514,6 +575,7 @@ main {
 
         .elements {
             .button {
+                border-radius: 25px;
                 font-family: euro;
 
                 &:not(:last-child) {
