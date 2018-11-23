@@ -30,7 +30,7 @@ class Reaper(BaseInstrument):
     VCO_1_LEVEL = 39
     VCO_2_LEVEL = 40
     
-    def __init__(self, output_name, channel=0, base_prog=79, base_bank=1, *args, **kwargs):
+    def __init__(self, output_name, channel=0, base_prog=0, base_bank=1, *args, **kwargs):
         super(Reaper, self).__init__(output_name, channel=channel, *args, **kwargs)
         self.base_prog = base_prog
 

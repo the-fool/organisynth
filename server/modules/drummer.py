@@ -4,9 +4,9 @@ base = 60
 
 house_thump = [
     1, 0, 0, 0,
-    1, 0, 0, 0,
-    1, 0, 0, 0,
-    1, 0, 0, 0
+    0, 0, 1, 0,
+    0, 0, 1, 0,
+    0, 1, 0, 0
 ]  # yapf: disable
 
 house_thwck = [
@@ -17,10 +17,10 @@ house_thwck = [
 ]  # yapf: disable
 
 house_chkk = [
-    0, 0, 1, 0,
-    0, 0, 1, 0,
-    0, 0, 1, 0,
-    0, 0, 1, 0
+    0, 0, 1, 1,
+    0, 0, 1, 1,
+    0, 0, 1, 1,
+    0, 1, 1, 1
 ]  # yapf: disable
 
 house_zweep = [
@@ -39,9 +39,9 @@ rhythm_house = [
 
 kraft_thump = [
     1, 0, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 1, 0,
-    0, 1, 0, 0
+    1, 0, 0, 0,
+    1, 0, 0, 0,
+    1, 0, 0, 0
 ]  # yapf: disable
 
 kraft_thwck = [
@@ -52,16 +52,16 @@ kraft_thwck = [
 ]  # yapf: disable
 
 kraft_chkk = [
-    1, 0, 1, 1,
-    0, 0, 1, 1,
-    1, 0, 1, 1,
-    1, 0, 1, 1
+    0, 0, 1, 0,
+    0, 0, 1, 0,
+    0, 0, 1, 0,
+    0, 0, 1, 0
 ]  # yapf: disable
 
 kraft_zweep = [
     1, 0, 0, 0,
-    0, 0, 1, 0,
-    0, 0, 1, 0,
+    0, 0, 0, 0,
+    0, 0, 0, 0,
     0, 0, 0, 0
 ]  # yapf: disable
 

@@ -40,5 +40,6 @@ class BaseInstrument:
         self.outport.send(m)
 
     def program_change(self, program):
+        print(program)
         m = mido.Message('program_change', program=program, channel=self.channel)
         self.outport.send(m)
